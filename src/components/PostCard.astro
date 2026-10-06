@@ -1,0 +1,19 @@
+---
+// One post in a list: date, reading time, title, summary and tags.
+import { formatDate, readingTime, type Post } from '../data/blog';
+
+interface Props { post: Post }
+const { post } = Astro.props;
+const { title, description, date, tags, draft } = post.data;
+---
+<article class="post-card">
+  <p class="post-meta">
+    <time datetime={date.toISOString()}>{formatDate(date)}</time>
+    <span aria-hidden="true">·</span>
+    <span>{readingTime(post.body)}</span>
+    {draft && <span class="draft-badge">Draft</span>}
+  </p>
+  <h3><a href={`/blog/${post.id}/`}>{title}</a></h3>
+  <p class="post-desc">{description}</p>
+  {tags.length > 0 && <ul class="chips sm">{tags.map((t) => <li>{t}</li>)}</ul>}
+</article>

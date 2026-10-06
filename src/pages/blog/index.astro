@@ -1,0 +1,19 @@
+---
+import Base from '../../layouts/Base.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getPosts } from '../../data/blog';
+
+const posts = await getPosts();
+---
+<Base title="Blog · Shreevas M Karanth" description="Notes on backend architecture, supply-chain platforms, integration and AI-assisted engineering.">
+  <section class="section wrap blog-index">
+    <div class="sec-head">
+      <p class="kicker">Writing</p>
+      <h2>Notes on architecture &amp; engineering</h2>
+      <p class="sub">Backend architecture, supply-chain platforms, integrations and AI-assisted engineering, from the work itself. <a href="/rss.xml">RSS feed</a></p>
+    </div>
+    {posts.length > 0
+      ? <div class="post-grid">{posts.map((post) => <PostCard post={post} />)}</div>
+      : <p class="empty-note">The first posts are on their way. Check back soon, or subscribe to the <a href="/rss.xml">RSS feed</a>.</p>}
+  </section>
+</Base>

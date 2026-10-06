@@ -1,0 +1,18 @@
+---
+// Home-page teaser for the blog: the three latest posts. Renders nothing until a post is published.
+import { getPosts } from '../data/blog';
+import PostCard from './PostCard.astro';
+
+const latest = (await getPosts()).slice(0, 3);
+---
+{latest.length > 0 && (
+  <section class="section wrap" id="writing">
+    <div class="sec-head writing-head">
+      <div><p class="kicker">Writing</p><h2>Notes on architecture &amp; engineering</h2></div>
+      <a class="btn btn-ghost" href="/blog/">All posts →</a>
+    </div>
+    <div class="post-grid">
+      {latest.map((post) => <PostCard post={post} />)}
+    </div>
+  </section>
+)}

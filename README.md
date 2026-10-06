@@ -7,10 +7,13 @@ Live at **https://shreevas-karanth.github.io**
 ```
 src/
   data/profile.ts         YOUR PERSONAL DETAILS (email, phone, links, résumé)  <- edit this
-  pages/index.astro       the page: lists the sections in order
+  pages/index.astro       the home page: lists the sections in order
+  pages/blog/             blog list (/blog/) and post pages (/blog/<slug>/)
+  pages/rss.xml.js        RSS feed at /rss.xml
+  content/blog/*.md       BLOG POSTS, one Markdown file each           <- write here
   layouts/Base.astro      <head>, nav, footer, theme toggle
   components/*.astro      one file per section (Hero, About, WhatIDo, ProblemsSolved,
-                          Architecture, Approach, Experience, Leadership, AIImpact, Contact)
+                          Architecture, Approach, Experience, Leadership, AIImpact, Writing, Contact)
   styles/global.css       all styles, light + dark theme
 public/                   files copied as-is (e.g. resume.pdf)
 .github/workflows/deploy.yml   builds and publishes on every push to main
@@ -23,6 +26,18 @@ public/                   files copied as-is (e.g. resume.pdf)
 - **Section order:** reorder the components in `src/pages/index.astro`. If you add a
   section to the nav, update the links in `src/layouts/Base.astro`.
 - **Résumé button:** put your PDF at `public/resume.pdf` and set `resume: "/resume.pdf"` in `profile.ts`.
+
+## Write a blog post
+
+1. Copy `src/content/blog/post-template.md` and rename it. The file name becomes the URL,
+   e.g. `idempotent-consumers.md` → `/blog/idempotent-consumers/`.
+2. Edit the frontmatter: `title`, `description`, `date`, `tags`.
+3. Write the post in Markdown. Code blocks, tables, quotes and images (from `public/`) are all styled.
+4. Remove `draft: true` when it's ready, then commit and push.
+
+Posts with `draft: true` are hidden everywhere: the blog page, the home page, post URLs and the RSS feed,
+in `npm run dev` as well. To preview drafts locally, run `SHOW_DRAFTS=true npm run dev`.
+The home page's **Writing** section (latest 3 posts) appears automatically once the first post is published.
 
 ## Run locally
 

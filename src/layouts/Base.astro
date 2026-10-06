@@ -1,8 +1,17 @@
 ---
-// Page shell: <head>, sticky nav with theme toggle, and footer.
+// Page shell: <head>, sticky nav with theme toggle, and footer. Used by the home page and the blog.
 import '../styles/global.css';
 import { profile } from '../data/profile';
 
+interface Props { title?: string; description?: string; type?: 'website' | 'article' }
+const {
+  title = 'Shreevas M Karanth',
+  description = 'Shreevas M Karanth — Associate Architect with 12 years building Java / Spring Boot platforms, event-driven systems and AI-assisted modernization.',
+  type = 'website',
+} = Astro.props;
+const isHome = Astro.url.pathname === '/';
+const onBlog = Astro.url.pathname.startsWith('/blog');
+const canonical = new URL(Astro.url.pathname, Astro.site);
 const year = new Date().getFullYear();
 ---
 <!doctype html>
@@ -10,12 +19,14 @@ const year = new Date().getFullYear();
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Shreevas M Karanth</title>
-<meta name="description" content="Shreevas M Karanth — Associate Architect with 12 years building Java / Spring Boot platforms, event-driven systems and AI-assisted modernization.">
-<meta property="og:title" content="Shreevas M Karanth · Associate Architect">
-<meta property="og:description" content="Java & Spring Boot architect. Event-driven systems, enterprise integrations and AI-assisted legacy modernization.">
-<meta property="og:url" content={Astro.site}>
-<link rel="canonical" href={Astro.site}>
+<title>{title}</title>
+<meta name="description" content={description}>
+<meta property="og:type" content={type}>
+<meta property="og:title" content={isHome ? 'Shreevas M Karanth · Associate Architect' : title}>
+<meta property="og:description" content={isHome ? 'Java & Spring Boot architect. Event-driven systems, enterprise integrations and AI-assisted legacy modernization.' : description}>
+<meta property="og:url" content={canonical}>
+<link rel="canonical" href={canonical}>
+<link rel="alternate" type="application/rss+xml" title="Shreevas M Karanth · Writing" href="/rss.xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -29,14 +40,15 @@ const year = new Date().getFullYear();
 
 <header class="nav" id="top">
   <div class="wrap nav-inner">
-    <a class="brand" href="#top" aria-label="Home"><span class="brand-mark">SK</span><span class="brand-name">Shreevas Karanth</span></a>
+    <a class="brand" href="/" aria-label="Home"><span class="brand-mark">SK</span><span class="brand-name">Shreevas Karanth</span></a>
     <nav class="nav-links" aria-label="Sections">
-      <a href="#about">About</a>
-      <a href="#expertise">Expertise</a>
-      <a href="#architecture">Architecture</a>
-      <a href="#experience">Experience</a>
-      <a href="#impact">AI Impact</a>
-      <a href="#contact">Contact</a>
+      <a href="/#about">About</a>
+      <a href="/#expertise">Expertise</a>
+      <a href="/#architecture">Architecture</a>
+      <a href="/#experience">Experience</a>
+      <a href="/#impact">AI Impact</a>
+      <a href="/blog/" aria-current={onBlog ? 'page' : undefined}>Blog</a>
+      <a href="/#contact">Contact</a>
     </nav>
     <button class="theme-btn" id="themeBtn" type="button" aria-label="Toggle colour theme">
       <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.39 5.39 0 0 1-4.4 2.26 5.4 5.4 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1Z"/></svg>
