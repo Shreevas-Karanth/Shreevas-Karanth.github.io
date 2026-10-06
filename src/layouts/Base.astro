@@ -38,7 +38,9 @@ const year = new Date().getFullYear();
 </head>
 <body>
 
-<header class="nav" id="top">
+<!-- No id="top" here: "#top" links then use the browser's built-in scroll-to-page-top.
+     Pointing them at this sticky header doesn't scroll, because it's always on screen. -->
+<header class="nav">
   <div class="wrap nav-inner">
     <a class="brand" href="/" aria-label="Home"><span class="brand-mark">SK</span><span class="brand-name">Shreevas Karanth</span></a>
     <nav class="nav-links" aria-label="Sections">
