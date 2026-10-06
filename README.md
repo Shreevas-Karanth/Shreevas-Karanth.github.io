@@ -1,48 +1,57 @@
 # Shreevas M Karanth — Portfolio
 
-A static, single-page portfolio (HTML + CSS + vanilla JS). No build step. Works on GitHub Pages as-is.
+A single-page portfolio built with [Astro](https://astro.build), deployed to GitHub Pages by GitHub Actions.
+
+Live at **https://shreevas-karanth.github.io**
 
 ```
-index.html             page content (about, skills, AI impact, experience)
-assets/css/style.css   styles, light + dark theme
-assets/js/config.js    YOUR PERSONAL DETAILS  <- edit this
-assets/js/main.js      theme toggle, contact/social rendering
+src/
+  data/profile.ts         YOUR PERSONAL DETAILS (email, phone, links, résumé)  <- edit this
+  pages/index.astro       the page: lists the sections in order
+  layouts/Base.astro      <head>, nav, footer, theme toggle
+  components/*.astro      one file per section (Hero, About, WhatIDo, ProblemsSolved,
+                          Architecture, Approach, Experience, Leadership, AIImpact, Contact)
+  styles/global.css       all styles, light + dark theme
+public/                   files copied as-is (e.g. resume.pdf)
+.github/workflows/deploy.yml   builds and publishes on every push to main
 ```
 
-## 1. Add your personal details
+## Edit content
 
-Open `assets/js/config.js` and fill in email, phone, LinkedIn, GitHub, etc.
-Any value left as `""` is hidden from the page automatically.
+- **Contact details and links:** `src/data/profile.ts`. Any value left as `""` is hidden.
+- **Section text:** open the matching file in `src/components/`. It's plain HTML.
+- **Section order:** reorder the components in `src/pages/index.astro`. If you add a
+  section to the nav, update the links in `src/layouts/Base.astro`.
+- **Résumé button:** put your PDF at `public/resume.pdf` and set `resume: "/resume.pdf"` in `profile.ts`.
 
-To add a résumé download button, put your PDF at `assets/resume.pdf` and set `resume: "assets/resume.pdf"`.
+## Run locally
 
-## 2. Publish on GitHub Pages
-
-1. Sign in to GitHub and create a **new public repository** named exactly **`<your-username>.github.io`**
-   (this gives you the address `https://<your-username>.github.io`).
-2. On the new repo page, click **"uploading an existing file"**, drag in **everything inside this folder**
-   (`index.html`, `assets/`, `.nojekyll`, `README.md`), and click **Commit changes**.
-3. Go to **Settings → Pages**. Under *Build and deployment*, set **Source: Deploy from a branch**,
-   **Branch: `main`**, folder **`/ (root)`**, and click **Save**.
-4. Wait 1–2 minutes, then open `https://<your-username>.github.io`.
-
-Prefer the command line?
+Requires Node 22.12 or newer.
 
 ```bash
-cd portfolio
-git init -b main
-git add .
-git commit -m "Portfolio site"
-git remote add origin https://github.com/<your-username>/<your-username>.github.io.git
-git push -u origin main
+npm install
+npm run dev       # http://localhost:4321, reloads as you edit
+npm run build     # production build into dist/
+npm run preview   # serve the built dist/ locally
 ```
 
-To update later, edit the files and upload/commit again; Pages redeploys automatically.
+## Publish on GitHub Pages
+
+One-time setup:
+
+1. On GitHub, open the **Shreevas-Karanth.github.io** repository.
+2. Go to **Settings → Pages → Build and deployment** and set **Source: GitHub Actions**.
+
+After that, every push to `main` builds the site and publishes it. Progress is in the repo's **Actions** tab.
+
+```bash
+git add .
+git commit -m "Update portfolio"
+git push
+```
 
 ## Custom domain (optional)
 
-In **Settings → Pages → Custom domain**, enter your domain, then add a `CNAME` DNS record pointing to `<your-username>.github.io`.
-
-## Preview locally
-
-Open `index.html` in a browser, or run `python3 -m http.server` in this folder and visit http://localhost:8000.
+Add a file `public/CNAME` that contains just your domain (e.g. `shreevas.dev`). Set the same domain in
+**Settings → Pages → Custom domain**, point a `CNAME` DNS record to `shreevas-karanth.github.io`,
+and change `site` in `astro.config.mjs` to your domain.

@@ -1,0 +1,56 @@
+---
+// Name, tagline, intro and the architect.yml card.
+import { profile, type IconName } from '../data/profile';
+import Icon from './Icon.astro';
+
+const social: { k: IconName; href: string; external: boolean }[] = [
+  ...(['linkedin', 'github', 'medium', 'twitter'] as const)
+    .filter((k) => profile[k])
+    .map((k) => ({ k, href: profile[k], external: true })),
+  ...(profile.email ? [{ k: 'email' as const, href: `mailto:${profile.email}`, external: false }] : []),
+];
+---
+  <section class="hero wrap">
+    <div class="hero-head">
+      <p class="eyebrow"><span class="dot"></span><span>{profile.role}</span> · <span>{profile.company}</span></p>
+      <h1>{profile.name}</h1>
+      <h3>Associate Architect | Backend Architecture | Supply Chain Platforms | AI-Assisted Engineering</h3>
+    </div>
+    <div class="hero-text">
+      <p class="lede">I design and deliver scalable backend platforms for complex business domains, with a strong focus on Supply Chain, Order Management, Inventory, Fulfilment.</p>
+
+      <p>12+ years of experience in Java and enterprise application development, I work across the complete technology lifecycle — business requirements, solution architecture, backend development, integration, data, cloud deployment and production delivery.</p> 
+
+      <p>Currently, I work as an Associate Architect, leading backend solutions for supply-chain platforms involving Order Management, Inventory Allocation, Fulfilment</p>
+
+      <p>I also apply AI-assisted engineering and specification-driven development to modernize legacy systems while preserving business rules, architectural integrity and engineering quality.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#experience">View experience</a>
+        <a class="btn btn-ghost" href="#contact">Get in touch</a>
+        {profile.resume && <a class="btn btn-ghost" href={profile.resume} target="_blank" rel="noopener">Download résumé</a>}
+      </div>
+      <ul class="social" aria-label="Profiles">
+      {social.map((s) => (
+        <li><a href={s.href} {...(s.external && { target: "_blank", rel: "noopener" })} aria-label={s.k}><Icon name={s.k} /></a></li>
+      ))}
+    </ul>
+    </div>
+
+    <figure class="manifest" aria-label="Profile summary as a service descriptor">
+      <figcaption><span class="tl r"></span><span class="tl y"></span><span class="tl g"></span><span class="fname">architect.yml</span></figcaption>
+<pre><code><span class="k">service</span>: shreevas-karanth
+<span class="k">role</span>: <span class="s">associate-architect</span>
+<span class="k">experience</span>: <span class="n">12y</span>   <span class="c"># since Sep 2014</span>
+<span class="k">runtime</span>:
+  - java: <span class="n">17</span>
+  - spring-boot: <span class="n">3.x</span>
+<span class="k">messaging</span>: [kafka, azure-service-bus]
+<span class="k">data</span>: [sql-server, mysql, mongodb]
+<span class="k">deploy</span>: [aws, azure, docker, k8s, jenkins]
+<span class="k">practices</span>:
+  - spec-driven development
+  - human-in-the-loop AI review
+  - weekly release ownership
+<span class="k">status</span>: <span class="s ok">healthy</span></code></pre>
+    </figure>
+  </section>

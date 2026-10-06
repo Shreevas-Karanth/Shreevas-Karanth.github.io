@@ -1,0 +1,22 @@
+---
+// Who: background summary and key facts.
+import { profile } from '../data/profile';
+---
+<section class="section wrap" id="about">
+  <div class="sec-head"><p class="kicker">About</p><h2>Ownership from requirement to production</h2></div>
+  <div class="about-grid">
+    <div class="prose">
+      <p>With nearly twelve years in software development, I combine technical depth with solution ownership and stakeholder management. I've worked across the whole lifecycle: understanding business requirements, designing solutions, implementing them, delivering releases and supporting them in production.</p>
+      <p>I focus on sound engineering principles, clean and maintainable code, and pragmatic technical decisions that line up with business goals. Much of my work is translating what clients and cross-functional teams need into systems that hold up.</p>
+      <p>I enjoy mentoring, sharing what I know, untangling hard problems, and taking on initiatives that improve both engineering quality and business value.</p>
+    </div>
+    <dl class="facts">
+      <div><dt>Current role</dt><dd>Associate Architect, CellMark (CROPS)</dd></div>
+      <div><dt>Organisation</dt><dd>Tarento Technologies, Sep 2014 – present</dd></div>
+      <div><dt>Education</dt><dd>MCA, VTU (2014)<br>B.Sc. Computers, Dharwad University (2011)</dd></div>
+      <div><dt>Certifications</dt><dd>Core Java, Advanced Java, Spring, Hibernate</dd></div>
+      <div><dt>Languages</dt><dd>Kannada (native), English, Hindi</dd></div>
+      {profile.location && <div><dt>Based in</dt><dd>{profile.location}</dd></div>}
+    </dl>
+  </div>
+</section>

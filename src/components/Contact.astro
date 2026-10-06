@@ -1,0 +1,43 @@
+---
+// Contact cards built from src/data/profile.ts; empty values are skipped.
+import { profile, prettyUrl, type IconName } from '../data/profile';
+import Icon from './Icon.astro';
+
+type Item = { k: IconName; label: string; val: string; href?: string; copy?: boolean };
+const items = ([
+  { k: 'email', label: 'Email', val: profile.email, href: `mailto:${profile.email}`, copy: true },
+  { k: 'phone', label: 'Phone', val: profile.phone, href: `tel:${profile.phone.replace(/\s/g, '')}`, copy: true },
+  { k: 'linkedin', label: 'LinkedIn', val: profile.linkedin && prettyUrl(profile.linkedin), href: profile.linkedin },
+  { k: 'github', label: 'GitHub', val: profile.github && prettyUrl(profile.github), href: profile.github },
+  { k: 'medium', label: 'Blog', val: profile.medium && prettyUrl(profile.medium), href: profile.medium },
+  { k: 'twitter', label: 'X / Twitter', val: profile.twitter && prettyUrl(profile.twitter), href: profile.twitter },
+  { k: 'location', label: 'Location', val: profile.location },
+] as Item[]).filter((i) => i.val);
+---
+<section class="section wrap contact" id="contact">
+  <div class="sec-head"><p class="kicker">Contact</p><h2>Let's talk architecture</h2><p class="sub">Open to conversations about backend platforms, legacy modernization and AI-assisted engineering.</p></div>
+  <ul class="contact-list">
+    {items.map((i) => (
+      <li>
+        <span class="ci"><Icon name={i.k} /></span>
+        <span class="cl">{i.label}</span>
+        {i.href
+          ? <a class="cv" href={i.href} {...(/^https?:/.test(i.href) && { target: '_blank', rel: 'noopener' })}>{i.val}</a>
+          : <span class="cv">{i.val}</span>}
+        {i.copy && <button type="button" class="copy" data-copy={i.val} aria-label={`Copy ${i.label}`}>Copy</button>}
+      </li>
+    ))}
+  </ul>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('.copy[data-copy]').forEach((b) => {
+    b.addEventListener('click', () => {
+      if (!navigator.clipboard) return;
+      navigator.clipboard.writeText(b.dataset.copy ?? '').then(() => {
+        b.textContent = 'Copied';
+        setTimeout(() => { b.textContent = 'Copy'; }, 1500);
+      }, () => {});
+    });
+  });
+</script>

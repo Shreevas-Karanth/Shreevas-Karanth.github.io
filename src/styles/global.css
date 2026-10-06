@@ -1,4 +1,4 @@
-/* Layout: single 1120px column; hero splits text / service-descriptor card; sections stack with a left-aligned header. */
+/* Global styles. Layout: single 1120px column; hero splits text / service-descriptor card; sections stack with a left-aligned header. */
 :root {
   --bg: #F2F4F6;
   --surface: #FFFFFF;
